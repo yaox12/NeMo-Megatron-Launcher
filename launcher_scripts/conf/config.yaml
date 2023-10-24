@@ -1,9 +1,9 @@
 defaults:
   - _self_
-  - cluster: bcm  # Set to bcm for BCM and BCP clusters. Set to k8s for a k8s cluster.
+  - cluster: bcm or k8s  # Set to bcm for BCM and BCP clusters. Set to k8s for a k8s cluster.
   - data_curation: common_crawl/curate_common_crawl
-  - data_preparation: gpt3/download_gpt3_pile
-  - training: gpt3/5b
+  - data_preparation: llama/download_llama_pile
+  - training: llama/llama2_70b
   - conversion: gpt3/convert_gpt3
   - conversion_hf2nemo: hf_llama2/convert_llama2_nemo
   - fine_tuning: null
@@ -27,8 +27,8 @@ debug: False
 
 stages:
   #- data_preparation
-  #- training
-  - conversion
+  - training
+  #- conversion
   #- conversion_hf2nemo
   #- prompt_learning
   #- adapter_learning
@@ -37,15 +37,15 @@ stages:
   #- export
   #- steerlm_reg
 
-cluster_type: bcm  # bcm, bcp, or k8s. If bcm or k8s, it must match - cluster above.
-launcher_scripts_path: ???  # Path to NeMo Megatron Launch scripts, should ends with /launcher_scripts
+cluster_type: bcm or k8s  # bcm, bcp, or k8s. If bcm or k8s, it must match - cluster above.
+launcher_scripts_path: /path/to/NeMo-Megatron-Launcher/launcher_scripts  # Path to NeMo Megatron Launch scripts, should ends with /launcher_scripts
 data_dir: ${launcher_scripts_path}/data  # Location to store and read the data.
 base_results_dir: ${launcher_scripts_path}/results  # Location to store the results, checkpoints and logs.
 container_mounts: # List of additional paths to mount to container. They will be mounted to same path.
   - null
 container: nvcr.io/ea-bignlp/ga-participants/nemofw-training:23.11
 
-wandb_api_key_file: null  # File where the w&B api key is stored. Key must be on the first line.
+wandb_api_key_file: ${launcher_scripts_path}/wandb_key.txt  # File where the w&B api key is stored. Key must be on the first line.
 wandb_api_bcp_secret_key: null  # For BCP clusters, read the W&B api key directly from the environment variable set as a secret from BCP. The value must match the name of the environment variable in BCP, such as WANDB_TOKEN.
 
 bcp_no_redirect: True  # If True, all stdout and stderr will not be redirected and appear in the standard logs. If False, all stdout and stderr output will be redirected to individual files on a per-rank basis. Ignored for non-BCP clusters.
