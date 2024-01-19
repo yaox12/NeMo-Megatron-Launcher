@@ -4,7 +4,7 @@ run:
   time_limit: "0-03:50:00"
   dependency: "singleton"
 trainer:
-  num_nodes: 1
+  num_nodes: 4
   devices: 8
   accelerator: gpu
   precision: bf16
@@ -119,9 +119,9 @@ model:
   ## Transformer Engine
   # fp8 training is currently not supported in the improved models
   transformer_engine: true
-  fp8: False # enables fp8 in TransformerLayer forward
+  fp8: true # enables fp8 in TransformerLayer forward
   fp8_e4m3: False # sets fp8_format = recipe.Format.E4M3
-  fp8_hybrid: False # sets fp8_format = recipe.Format.HYBRID
+  fp8_hybrid: true # sets fp8_format = recipe.Format.HYBRID
   fp8_margin: 0 # scaling margin
   fp8_interval: 1 # scaling update interval
   fp8_amax_history_len: 1024 # Number of steps for which amax history is recorded per tensor

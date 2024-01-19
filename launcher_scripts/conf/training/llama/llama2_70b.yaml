@@ -45,10 +45,10 @@ exp_manager:
     buffer_size: 5
 model:
   mcore_gpt: true
-  micro_batch_size: 1
+  micro_batch_size: 2
   global_batch_size: 128
   rampup_batch_size: null
-  tensor_model_parallel_size: 4
+  tensor_model_parallel_size: 8
   pipeline_model_parallel_size: 4
   virtual_pipeline_model_parallel_size: 20
   encoder_seq_length: 4096
@@ -116,9 +116,9 @@ model:
   activations_checkpoint_layers_per_pipeline: 0
   sequence_parallel: true
   transformer_engine: true
-  fp8: false
+  fp8: true
   fp8_e4m3: false
-  fp8_hybrid: false
+  fp8_hybrid: true
   fp8_margin: 0
   fp8_interval: 1
   fp8_amax_history_len: 1
